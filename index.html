@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<title>Editor</title>
+	</head>
+	<body>
+		<h1>Table Editor</h1>
+		<table tableedit>
+			<thead>
+				<tr><th>stuff</th><th>stuff2</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>stuff</td>
+					<td>stuff2</td>
+				</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript" src="editor.js"></script>
+		<script type="text/javascript">
+			(window.attachEvent||window.addEventListener)("load",function() {
+				var editor = new TableEdit(document.querySelector("[tableedit]"));
+				console.log(editor);
+			},false);
+		</script>
+	</body>
+</html>
