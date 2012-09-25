@@ -146,6 +146,8 @@
 							kind === "footer" ?
 							"th" : "td");
 			
+			cell.innerHTML = "&nbsp;";
+			
 			newRow.appendChild(cell);
 		}
 		
@@ -259,6 +261,8 @@
 				document.createElement((
 					rowKind === "header" ||
 					rowKind === "footer" ? "th" : "td"));
+			
+			newCell.innerHTML = "&nbsp;";
 			
 			if (position === self.colIndex.length) {
 				row.appendChild(newCell);

@@ -1,0 +1,147 @@
+.tableedit-active,
+.tableedit-active *,
+.tableedit-rowguide,
+.tableedit-rowguide *,
+.tableedit-colguide,
+.tableedit-colguide * {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.tableedit-active {
+	border-spacing: 0px;
+	border-bottom: solid 1px #999;
+	border-right: solid 1px #999;
+	margin: 2em;
+}
+
+.tableedit-active td,
+.tableedit-active th {
+	border-top: solid 1px #999;
+	border-left: solid 1px #999;
+	min-height: 1.5em;
+	line-height: 1.5em;
+	min-width: 80px;
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	min-height: 1.5em;
+}
+
+.tableedit-active th {
+	background-color: #EEE;
+}
+
+.tableedit-rowguide,
+.tableedit-colguide {
+	border: solid #CCC 1px;
+	border-top-color: #EEE;
+	border-left-color: #DDD;
+	border-right-color: #DDD;
+	-webkit-border-radius: 3px;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	background-color: white;
+	overflow: hidden;
+	
+	-webkit-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+}
+
+.tableedit-rowguide {
+	margin-left: -2em;
+	width: 1.8em;
+}
+
+.tableedit-colguide {
+	margin-top: -2em;
+	height: 1.8em;
+}
+
+.tableedit-colguide > li {
+	position: absolute;
+	border-right: solid #EAEAEA 1px;
+	height: 100%;
+	line-height: 1.7em;
+}
+
+.tableedit-rowguide > li {
+	position: absolute;
+	border-bottom: solid #EAEAEA 1px;
+	width: 100%;
+	line-height: 1.7em;
+}
+
+.tableedit-colguide label,
+.tableedit-rowguide label {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: block;
+	font-size: 9pt;
+	color: #999;
+}
+
+.tableedit-rowguide > li ul,
+.tableedit-colguide > li ul {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+.tableedit-rowguide > li ul {
+	margin-left: 100%;
+	padding-left: 0.4em;
+}
+
+.tableedit-rowguide > li ul:before {
+	position: absolute;
+	display: block;
+	content: ".";
+	color: transparent;
+	border: solid transparent 10px;
+	border-right-color: rgba(0,0,0,0.8);
+	width: 0px;
+	height: 0px;
+	margin-top: 0.3em;
+	left: -14px;
+}
+
+.tableedit-rowguide > li ul li,
+.tableedit-colguide > li ul li {
+	display: block;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background-color: rgba(0,0,0,0.8);
+	min-width: 150px;
+	color: white;
+	font-size: 10pt;
+	
+	cursor: pointer;
+}
+
+.tableedit-rowguide > li ul li:hover,
+.tableedit-colguide > li ul li:hover {
+	background-color: black;
+}
+
+.tableedit-rowguide > li ul li:first-child,
+.tableedit-colguide > li ul li:first-child {
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+
+.tableedit-rowguide > li ul li:last-child,
+.tableedit-colguide > li ul li:last-child {
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+.tableedit-rowguide > li:hover ul,
+.tableedit-colguide > li:hover ul {
+	display: block;
+}
