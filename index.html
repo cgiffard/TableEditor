@@ -4,17 +4,23 @@
 		<meta charset="utf8" />
 		<title>Editor</title>
 		<style>
+			* {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			
 			body {
 				font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 			}
 			
-			table {
+			table[tableedit] {
 				border-spacing: 0px;
 				border-bottom: solid 1px #999;
 				border-right: solid 1px #999;
+				margin: 2em;
 			}
 			
-			td, th {
+			[tableedit] td, [tableedit] th {
 				border-top: solid 1px #999;
 				border-left: solid 1px #999;
 				min-height: 1.5em;
@@ -24,32 +30,83 @@
 				padding-right: 0.2em;
 			}
 			
-			th {
+			[tableedit] th {
 				background-color: #EEE;
+			}
+			
+			.tableedit-rowguide,
+			.tableedit-colguide {
+				border: solid #CCC 1px;
+				border-top-color: #EEE;
+				border-left-color: #DDD;
+				border-right-color: #DDD;
+				-webkit-border-radius: 3px;
+				list-style-type: none;
+				margin: 0px;
+				padding: 0px;
+				background-color: white;
+				
+				-webkit-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+			}
+			
+			.tableedit-rowguide {
+				margin-left: -2em;
+				width: 1.8em;
+			}
+			
+			.tableedit-colguide {
+				margin-top: -2em;
+				height: 1.8em;
 			}
 		</style>
 	</head>
 	<body>
-		<!-- <h1>Table Editor</h1> -->
+		<h1>Table Editor</h1>
 		<table tableedit>
 			<thead>
 				<tr>
 					<th>stuff</th>
 					<th>stuff2</th>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>stuff</td>
 					<td>stuff2</td>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
+					<th>stuff</th>
 				</tr>
 			</tbody>
 		</table>
+		<p>
+			<button onclick="addCol()">Add Column</button>
+			<button onclick="addRow()">Add Row</button>
+		</p>
 		<script type="text/javascript" src="editor.js"></script>
+		<script type="text/javascript" src="ui.js"></script>
 		<script type="text/javascript">
 			(window.attachEvent||window.addEventListener)("load",function() {
-				var editor = new TableEdit(document.querySelector("[tableedit]"));
-				console.log(editor);
+				var editor = new TableEdit(document.querySelector("[tableedit]")),
+					editorUI = new TableEditUI(editor);
+				
+				editorUI.render();
+				
+				window.addCol = function() {
+					editor.addColumn();
+				}
+				
+				window.addRow = function() {
+					editor.addRow();
+				}
+				
 			},false);
 		</script>
 	</body>

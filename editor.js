@@ -26,46 +26,6 @@
 		// Now build an internal representation of our rows and columns...
 		self.update();
 		
-		self.addRow("header",1);
-		self.addRow("normal",4);
-		self.removeRow(0);
-		
-		self.addRow("header");
-		self.addRow("header");
-		self.addRow("headesdr");
-		self.addRow("headesdr");
-		self.addRow("header");
-		
-		self.addColumn("header",0);
-		self.addColumn("header");
-		self.addColumn();
-		self.addColumn();
-		self.addColumn();
-		
-		self.removeColumn(0);
-		self.removeColumn(0);
-		self.removeColumn(0);
-		
-		
-		self.addRow("header",1);
-		console.log(self.rowIndex);
-		console.log(self.colIndex);
-		
-		self.colIndex.forEach(console.log.bind(console));
-		
-		self.update();
-		self.colIndex.forEach(function(col,x) {
-			var offset = x % 2;
-			
-			col.forEach(function(cell,y) {
-				var kind = ["header","normal"][(y+offset)%2];
-				self.alterCell(x,y,x*y);
-				self.changeCellType(x,y,kind,true);
-			});
-		});
-		self.update();
-		
-		
 		return self;
 	};
 	
@@ -75,6 +35,8 @@
 		self.updateSectionElements()
 			.updateIndices()
 			.updateCellStates();
+		
+		self.emit("update");
 		
 		return self;
 	};
@@ -183,7 +145,7 @@
 							kind === "header" ||
 							kind === "footer" ?
 							"th" : "td");
-			cell.innerHTML = "sd"
+			
 			newRow.appendChild(cell);
 		}
 		
@@ -287,10 +249,16 @@
 		
 		// Loop through all rows, appending column at current position.
 		self.rowIndex.forEach(function(row) {
+			var rowKind = kind;
+			
+			if (row.parentNode === self.thead ||
+				row.parentNode === self.tfoot)
+				rowKind = "header";
+			
 			var newCell =
 				document.createElement((
-					kind === "header" ||
-					kind === "footer" ? "th" : "td"));
+					rowKind === "header" ||
+					rowKind === "footer" ? "th" : "td"));
 			
 			if (position === self.colIndex.length) {
 				row.appendChild(newCell);
@@ -552,4 +520,3 @@
 	glob.TableEdit = TableEdit;
 	
 })(this);
-
