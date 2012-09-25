@@ -3,12 +3,40 @@
 	<head>
 		<meta charset="utf8" />
 		<title>Editor</title>
+		<style>
+			body {
+				font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+			}
+			
+			table {
+				border-spacing: 0px;
+				border-bottom: solid 1px #999;
+				border-right: solid 1px #999;
+			}
+			
+			td, th {
+				border-top: solid 1px #999;
+				border-left: solid 1px #999;
+				min-height: 1.5em;
+				line-height: 1.5em;
+				min-width: 80px;
+				padding-left: 0.2em;
+				padding-right: 0.2em;
+			}
+			
+			th {
+				background-color: #EEE;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Table Editor</h1>
+		<!-- <h1>Table Editor</h1> -->
 		<table tableedit>
 			<thead>
-				<tr><th>stuff</th><th>stuff2</th></tr>
+				<tr>
+					<th>stuff</th>
+					<th>stuff2</th>
+				</tr>
 			</thead>
 			<tbody>
 				<tr>
