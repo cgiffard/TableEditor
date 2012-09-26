@@ -38,7 +38,6 @@
 	border-top-color: #EEE;
 	border-left-color: #DDD;
 	border-right-color: #DDD;
-	-webkit-border-radius: 3px;
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
@@ -46,6 +45,16 @@
 	overflow: hidden;
 	
 	-webkit-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+	-msie-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+	-moz-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+	-o-box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+	box-shadow: rgba(0,0,0,0.1) 0px 1px 1px;
+	
+	-webkit-border-radius: 3px;
+	-msie-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .tableedit-rowguide {
@@ -100,6 +109,10 @@
 	border-radius: 4px;
 	
 	-webkit-box-shadow: rgba(0,0,0,0.5) 1px 1px 2px;
+	-msie-box-shadow: rgba(0,0,0,0.5) 1px 1px 2px;
+	-moz-box-shadow: rgba(0,0,0,0.5) 1px 1px 2px;
+	-o-box-shadow: rgba(0,0,0,0.5) 1px 1px 2px;
+	box-shadow: rgba(0,0,0,0.5) 1px 1px 2px;
 	
 	overflow: hidden;
 }
