@@ -41,27 +41,12 @@
 				</tr>
 			</tbody>
 		</table>
-		<p>
-			<button onclick="addCol()">Add Column</button>
-			<button onclick="addRow()">Add Row</button>
-		</p>
 		<script type="text/javascript" src="editor.js"></script>
 		<script type="text/javascript" src="ui.js"></script>
 		<script type="text/javascript">
 			(window.attachEvent||window.addEventListener)("load",function() {
 				var editor = new TableEdit(document.querySelector("[tableedit]")),
-					editorUI = new TableEditUI(editor);
-				
-				editorUI.render();
-				
-				window.addCol = function() {
-					editor.addColumn();
-				}
-				
-				window.addRow = function() {
-					editor.addRow();
-				}
-				
+					editorUI = new TableEditUI(editor).render();
 			},false);
 		</script>
 	</body>

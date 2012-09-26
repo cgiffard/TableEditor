@@ -10,11 +10,15 @@
 		self.table = editor.table;
 		self.rowGuide = document.createElement("ul");
 		self.colGuide = document.createElement("ul");
+		self.menuElement = document.createElement("ul");
+		self.menuObscurer = document.createElement("div");
+		self.menuElement.className = "tableedit-menu";
 		
 		// Assign some basic classes...
 		self.rowGuide.className = "tableedit-rowguide";
 		self.colGuide.className = "tableedit-colguide";
 		self.colGuide.style.position = self.rowGuide.style.position = "fixed";
+		self.menuObscurer.className = "tableedit-obscurer";
 		
 		// Assign a class to the table being edited...
 		self.table.className += " tableedit-active";
@@ -22,15 +26,22 @@
 		// Listen to table update events...
 		self.editor.on("update",self.update.bind(self));
 		
-		// And to any document or interaction events we might need to keep our UI looking nice...
+		// And to any document or interaction events we might need to keep
+		// our UI looking nice...
 		var posUpdate = self.updatePositioning.bind(self);
 		window.addEventListener("resize",posUpdate);
 		document.addEventListener("scroll",posUpdate);
 		self.table.addEventListener("keydown",posUpdate);
 		self.table.addEventListener("keyup",posUpdate);
 		
-		for (var i = 0; i < 25; i++)
-			self.editor.addRow();
+		// And now set some events for our obscure-layer
+		function cancelMenu() {
+			document.body.removeChild(self.menuObscurer);
+			document.body.removeChild(self.menuElement);
+		}
+		
+		self.menuObscurer.addEventListener('click',cancelMenu);
+		self.menuObscurer.addEventListener('touchstart',cancelMenu);
 		
 		return self;
 	};
@@ -56,71 +67,99 @@
 		}
 	};
 	
+	TableEditUI.prototype.showMenu = function(orientation,tab,object) {
+		var self = this;
+		
+		var objectName = orientation === "row" ? "Row" : "Column",
+			index = object.index !== undefined ? object.index : object[0].index;
+		
+		function menuItem(text,handler) {
+			var menuItemLi = document.createElement("li");
+				menuItemLi.innerHTML = text;
+			
+			function handleMenu() {
+				document.body.removeChild(self.menuObscurer);
+				document.body.removeChild(self.menuElement);
+				handler();
+			}
+			
+			menuItemLi.addEventListener("click",handleMenu);
+			menuItemLi.addEventListener("touchstart",handleMenu);
+			return menuItemLi;
+		}
+		
+		self.menuElement.innerHTML = "";
+		document.body.appendChild(self.menuObscurer);
+		document.body.appendChild(self.menuElement);
+		
+		var tabPosition = self.getElementOffset(tab),
+			menuX = tabPosition.x + (orientation === "row" ? tabPosition.width : 0),
+			menuY = tabPosition.y + (orientation !== "row" ? tabPosition.height : 0);
+		
+		self.menuElement.appendChild(menuItem(
+			"Delete " + objectName,
+			function() {
+				self.editor["remove" + objectName](index);
+			}
+		));
+		
+		self.menuElement.appendChild(menuItem(
+			"Insert Header " + objectName + " Before",
+			function() {
+				self.editor["add" + objectName]("header",index);
+			}
+		));
+		
+		self.menuElement.appendChild(menuItem(
+			"Insert Header " + objectName + " After",
+			function() {
+				self.editor["add" + objectName]("header",index+1);
+			}
+		));
+		
+		self.menuElement.appendChild(menuItem(
+			"Insert " + objectName + " Before",
+			function() {
+				self.editor["add" + objectName]("normal",index);
+			}
+		));
+		
+		self.menuElement.appendChild(menuItem(
+			"Insert " + objectName + " After",
+			function() {
+				self.editor["add" + objectName]("normal",index+1);
+			}
+		));
+		
+		self.menuElement.style.left = menuX + "px";
+		self.menuElement.style.top = menuY + "px";
+		
+		return self;
+	};
+	
 	TableEditUI.prototype.update = function() {
 		var self = this;
 		
 		self.rowGuide.innerHTML = "";
 		self.colGuide.innerHTML = "";
 		
-		function menuItem(text,handler) {
-			var menuItem = document.createElement("li");
-				menuItem.innerHTML = text;
-			
-			menuItem.addEventListener("click",handler);
-			return menuItem;
-		}
-		
 		// Generate list items for rows and cols.
 		self.editor.rowIndex.forEach(function(row,index) {
 			var rowTab = document.createElement("li"),
-				rowTabLabel = document.createElement("label"),
-				rowTabMenu = document.createElement("ul");
+				rowTabLabel = document.createElement("label");
 			
 			rowTabLabel.innerHTML = index+1;
 			rowTab.appendChild(rowTabLabel);
-			rowTab.appendChild(rowTabMenu);
 			self.rowGuide.appendChild(rowTab);
 			
-			rowTabMenu.appendChild(menuItem(
-				"Delete Row",
-				function() {
-					self.editor.removeRow(row);
-				}
-			));
-			
-			rowTabMenu.appendChild(menuItem(
-				"Insert Header Before",
-				function() {
-					self.editor.addRow("header",index);
-				}
-			));
-			
-			rowTabMenu.appendChild(menuItem(
-				"Insert Header After",
-				function() {
-					self.editor.addRow("header",index+1);
-				}
-			));
-			
-			rowTabMenu.appendChild(menuItem(
-				"Insert Row Before",
-				function() {
-					self.editor.addRow("normal",index);
-				}
-			));
-			
-			rowTabMenu.appendChild(menuItem(
-				"Insert Row After",
-				function() {
-					self.editor.addRow("normal",index+1);
-				}
-			));
+			rowTab.addEventListener("click",function() {
+				self.showMenu("row",rowTab,row);
+			});
 		});
 		
 		self.editor.colIndex.forEach(function(col,index) {
 			var colTab = document.createElement("li"),
-				colTabLabel = document.createElement("label"),
-				colTabMenu = document.createElement("ul");
+				colTabLabel = document.createElement("label");
 			
 			var unitAlpha	= index % 26,
 				globalAlpha	= (index / 26) | 0,
@@ -130,8 +169,11 @@
 			
 			colTabLabel.innerHTML = alphaString;
 			colTab.appendChild(colTabLabel);
-			colTab.appendChild(colTabMenu);
 			self.colGuide.appendChild(colTab);
+			
+			colTab.addEventListener("click",function() {
+				self.showMenu("col",colTab,col);
+			});
 		});
 		
 		self.updatePositioning();
