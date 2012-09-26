@@ -378,12 +378,12 @@
 		return self;
 	};
 	
-	TableEdit.prototype.changeColType = function(x,newType) {
+	TableEdit.prototype.changeColumnType = function(x,newType) {
 		var self = this;
 		
 		if (self.colIndex[x]) {
 			
-			self.colIndex.forEach(function(cell,y) {
+			self.colIndex[x].forEach(function(cell,y) {
 				self.changeCellType(x,y,newType,true);
 			});
 			

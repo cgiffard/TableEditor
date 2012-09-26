@@ -131,6 +131,20 @@
 			}
 		));
 		
+		self.menuElement.appendChild(menuItem(
+			"Convert to header " + objectName.toLowerCase(),
+			function() {
+				self.editor["change" + objectName + "Type"](index,"header");
+			}
+		));
+		
+		self.menuElement.appendChild(menuItem(
+			"Convert to regular " + objectName.toLowerCase(),
+			function() {
+				self.editor["change" + objectName + "Type"](index,"normal");
+			}
+		));
+		
 		self.menuElement.style.left = menuX + "px";
 		self.menuElement.style.top = menuY + "px";
 		
