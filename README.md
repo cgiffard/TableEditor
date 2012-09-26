@@ -17,3 +17,5 @@ intention to ensure that both work well.
 *	Keyboard accessibility
 *	Switch UI positioning to use coordinate transform between absolute and fixed
 	positioning modes rather than the spaghetti gymnastics the code does now.
+*	Auto-reconcile table sectioning elements with th-based rows.
+*	Wrap cell, column, and row classes
